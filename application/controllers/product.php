@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class Product extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -17,31 +17,14 @@ class Welcome extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see http://codeigniter.com/user_guide/general/urls.html
 	 */
-	public function index()
+	public function index($id)
 	{
-		$this->load->model('utility');
+		$this->load->model('product_model');
 		
-		$url ='http://www.snapdeal.com/product/red-riding-brown-sky-blue/457016';
-		$array = array();
-		$array[] = 'h1[itemprop=name]';
-		$array[] = 'span[id=selling-price-id]';
-		$array[] = 'h1[itemprop=name]';
-
-
-		//$output=$this->crawler->get_title();
-				//var_dump($output);
-		//$output=$this->crawler->get_keywords();
+		$param=array('p_id' => $id);
+		$data=$this->product_model($param)->fetch_all();
 		
-		//var_dump($output);
-		//$output=$this->crawler->get_text();
-		
-		$arr = $this->utility->get_all_tags($url , $array);
-		
-		var_dump($arr);
-		//$arr2=$this->crawler->get_tag('span[id=selling-price-id]');
-		
-		//var_dump($arr2);//var_dump($output);
-		
+		var_dump($data);
 		
 		//$this->load->view('welcome_message');
 	}

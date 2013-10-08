@@ -322,8 +322,12 @@ class Crawler{
 		return $this->links;
 	}
 	
-	public function get_tag($tag=''){
-		
+	public function get_tag($tag='')
+	{
+		//echo 'tag is<br>'.$tag;
+		//$tag='h1[itemprop=name]';
+		//var_dump($this->dom->find($tag,0));
+		//exit;
 		return $this->dom->find($tag,0)->innertext();
 		
 	}
