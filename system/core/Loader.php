@@ -300,7 +300,30 @@ class CI_Loader {
 
 			$model = ucfirst($model);
 
-			$CI->$name = new $model();
+			//$CI->$name = new $model();
+			
+			/**
+			* This code was added acoz we can now initialize the constructor of the model while loading it
+			*	Added by Neeraj
+			*	#####Starts####
+			*	How to load model : PAss your contructor param after as 4th variable
+			*	$this->load->model('product_model','',FALSE,$param	);
+			**/
+			if (func_num_args() > 3) 
+			{
+				$refl = new ReflectionClass($model);
+				$CI->$name = $refl->newInstanceArgs(array_slice(func_get_args(), 3));
+			} 
+			else
+			{
+				$CI->$name = new $model();
+			}
+
+		    /**
+		    *	#####Ends####
+		    **/
+
+
 
 			$this->_ci_models[] = $name;
 			return;
