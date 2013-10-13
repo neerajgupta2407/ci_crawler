@@ -6,16 +6,21 @@ class My_db extends CI_Model
 		
 		
 		parent::__construct();
+
+		$this->load->model('my_util');
 	}
 	
 	function db_insert($table,$data)
 	{
+		$data = $this->my_util->array_null_filter($data);
+
 		$this->db->insert($table,$data);
 		return $this->db->insert_id();
 		
 	}
 	function insert_batch($table,$data)
 	{
+
 		$this->db->insert_batch($table,$data);
 		return $this->db->insert_id();
 		
@@ -86,6 +91,9 @@ class My_db extends CI_Model
 	
 	function update($table,$data,$where)
 	{
+		$data = $this->my_util->array_null_filter($data);
+
+		
 		$this->db->where($where);
 		if($this->db->update($table,$data))
 		return 1;

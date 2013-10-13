@@ -16,10 +16,10 @@
 	function __construct($param)
 	{
 		$this->load->model('my_db');
-
+		$this->output->enable_profiler(TRUE);
 		$this->table_name = 'product';
 		$this->pk = 'p_id';
-		$param = filter_array_for_null($param); //filtering the array and removing null entries
+		$param = $this->my_util->array_null_filter($param);  //filtering the array and removing null entries
 		if(array_key_exists($this->pk, $param) && $param[$this->pk]!='')
 		{
 			$sql="select * from $this->table_name where $this->pk = ".$param[$this->pk];
@@ -41,8 +41,8 @@
 		$param['category_id'] = $this->category_id;
 		$param['name'] = $this->name;
 		$param['description'] = $this->description;
-		$param['dt'] = $this->dt;
-			$id = $this->my_db->db_insert($this->table_name,$param);	//inserting into db
+		$param['dt'] = date('Y-m-d H:i:s',time());
+		$id = $this->my_db->db_insert($this->table_name,$param);	//inserting into db
 		return $id;
  	} 
 
@@ -54,7 +54,7 @@
 		$param['description'] = $this->description;
 		$param['dt'] = $this->dt;
 		$val = $this->pk;
-		$where = " where $this->pk=?";
+		
 		$where_param = array($this->pk => $this->$val);
 		$ret = $this->my_db->update($this->table_name,$param,$where_param);	//updating into db files
 		return $ret;

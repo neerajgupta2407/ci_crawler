@@ -1,6 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Product extends CI_Controller {
+class Product extends CI_Controller
+ {
 
 	/**
 	 * Index Page for this controller.
@@ -19,15 +20,48 @@ class Product extends CI_Controller {
 	 */
 	public function index($id)
 	{
-		$this->load->model('product_model');
-		
+		//echo  'id is '.$id;
 		$param=array('p_id' => $id);
-		$data=$this->product_model($param)->fetch_all();
+		$this->load->model('product_model','',FALSE,$param);
+		
+		
+		$data=$this->product_model->fetch_data();
 		
 		var_dump($data);
 		
 		//$this->load->view('welcome_message');
 	}
+
+	public function insert()
+	{
+
+		# code...
+		$param['category_id'] = '2';
+		$param['name'] = 'test';
+
+		
+		$this->load->model('product_model','',FALSE,$param);
+		$data=$this->product_model->insert();
+		var_dump($data);
+
+
+	}
+
+	public function update()
+	{
+
+		# code...
+		$param['p_id'] = '9';
+		$param['description'] = 'test desc';
+
+		
+		$this->load->model('product_model','',FALSE,$param);
+		$data=$this->product_model->update();
+		var_dump($data);
+
+
+	}
+
 }
 
 /* End of file welcome.php */
