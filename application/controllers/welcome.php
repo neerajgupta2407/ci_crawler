@@ -1,5 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+ini_Set('display_errors','1');
+
 class Welcome extends CI_Controller {
 
 	/**
@@ -21,11 +23,16 @@ class Welcome extends CI_Controller {
 	{
 		$this->load->model('utility');
 		
+		var_dump( $this->input->is_cli_request());
+
 		$url ='http://www.snapdeal.com/product/red-riding-brown-sky-blue/457016';
+		$url='http://www.flipkart.com/sandisk-memory-card-microsdhc-8gb/p/itmczcthv3hpnhhe';
 		$array = array();
 		$array[] = 'h1[itemprop=name]';
-		$array[] = 'span[id=selling-price-id]';
-		$array[] = 'h1[itemprop=name]';
+		$array[] = 'span[id=fk-mprod-list-id]';
+		$array[] = 'span[class=pprice]';
+		$array[] = 'meta[itemprop=price]';
+		//$array[] = 'h1[itemprop=name]';
 
 
 		//$output=$this->crawler->get_title();
@@ -38,6 +45,10 @@ class Welcome extends CI_Controller {
 		$arr = $this->utility->get_all_tags($url , $array);
 		
 		var_dump($arr);
+		echo '<br>';
+
+		$arr1 = $this->utility->get_all_outer_tags($url , $array);
+		var_dump($arr1);
 		//$arr2=$this->crawler->get_tag('span[id=selling-price-id]');
 		
 		//var_dump($arr2);//var_dump($output);

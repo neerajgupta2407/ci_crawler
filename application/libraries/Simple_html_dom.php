@@ -683,8 +683,8 @@ class simple_html_dom_node
 //		$pattern = "/([\w-:\*]*)(?:\#([\w-]+)|\.([\w-]+))?(?:\[@?(!?[\w-]+)(?:([!*^$]?=)[\"']?(.*?)[\"']?)?\])?([\/, ]+)/is";
 		$pattern = "/([\w-:\*]*)(?:\#([\w-]+)|\.([\w-]+))?(?:\[@?(!?[\w-:]+)(?:([!*^$]?=)[\"']?(.*?)[\"']?)?\])?([\/, ]+)/is";
 		preg_match_all($pattern, trim($selector_string).' ', $matches, PREG_SET_ORDER);
-		echo 'matches are';
-		var_dump($matches);
+		//echo 'matches are';
+		//var_dump($matches);
 		if (is_object($debug_object)) {$debug_object->debugLog(2, "Matches Array: ", $matches);}
 
 		$selectors = array();
@@ -1113,6 +1113,7 @@ class simple_html_dom
 	// Paperg - allow us to specify that we want case insensitive testing of the value of the selector.
 	function find($selector, $idx=null, $lowercase=false)
 	{
+		//echo $selector.' '.$idx.' '.$lowercase;
 		return $this->root->find($selector, $idx, $lowercase);
 	}
 
@@ -1719,6 +1720,8 @@ class simple_html_dom
 	function getElementByTagName($name) {return $this->find($name, 0);}
 	function getElementsByTagName($name, $idx=-1) {return $this->find($name, $idx);}
 	function loadFile() {$args = func_get_args();$this->load_file($args);}
+
+	function get_all_attribute(){ return $this->root->getAllAttributes();}
 }
 
 ?>
