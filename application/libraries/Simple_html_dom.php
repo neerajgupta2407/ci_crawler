@@ -869,6 +869,7 @@ class simple_html_dom_node
 		$height = -1;
 
 		if ($this->tag !== 'img')
+		
 		{
 			return false;
 		}

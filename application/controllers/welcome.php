@@ -23,7 +23,8 @@ class Welcome extends CI_Controller {
 	{
 		$this->load->model('utility');
 		
-		var_dump( $this->input->is_cli_request());
+		echo PHP_SAPI;
+		//var_dump( $this->input->is_cli_request());
 
 		$url ='http://www.snapdeal.com/product/red-riding-brown-sky-blue/457016';
 		$url='http://www.flipkart.com/sandisk-memory-card-microsdhc-8gb/p/itmczcthv3hpnhhe';
@@ -47,7 +48,7 @@ class Welcome extends CI_Controller {
 		var_dump($arr);
 		echo '<br>';
 
-		$arr1 = $this->utility->get_all_outer_tags($url , $array);
+		//$arr1 = $this->utility->get_all_outer_tags($url , $array);
 		var_dump($arr1);
 		//$arr2=$this->crawler->get_tag('span[id=selling-price-id]');
 		

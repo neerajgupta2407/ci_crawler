@@ -841,6 +841,7 @@ class CI_Input {
 	 */
 	public function is_cli_request()
 	{
+	
 		return (php_sapi_name() == 'cli') or defined('STDIN');
 	}
 

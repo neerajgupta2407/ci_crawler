@@ -1,0 +1,5 @@
+1.how to get correct data from infibeam site.
+2.)search different price tags for sites ither than tradus/flip/infi/snap  ----
+3.)what extra data to de crawled other than  price/name/offfer.   like   -out of stock/shipping charges/emi option/any cashback.
+4.)Create the excel sheet for different tags for different sites
+

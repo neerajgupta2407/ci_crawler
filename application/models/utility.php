@@ -120,7 +120,7 @@ class Utility extends CI_Model
 
 				$len=  strpos($tag,$value);
 
-				$arr = explode($value,$tag;
+				$arr = explode($value,$tag);
 				//var_dump($arr);
 
 
@@ -133,8 +133,6 @@ class Utility extends CI_Model
 			}
 
 		return $response;
-
-
 		
 	}
 
