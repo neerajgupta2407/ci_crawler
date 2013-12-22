@@ -8,6 +8,8 @@ class Utility extends CI_Model
 	*
 	**/
 
+	public $object_crawler;
+
 	function __construct()
 	{
 		parent::__construct();
@@ -15,91 +17,98 @@ class Utility extends CI_Model
 	}
 
 	
-	function get_dom_object($url)
+	function set_dom_object($url)
 	{
 		$this->load->library('crawler');
+		
 		$this->crawler->set_url($url);
 
+		$this->object_crawler = $this->crawler;
 
-			//returning the object of class 'crawler'
 		return $this->crawler;
+	}
 
+	/**
+	 * [get_dom_object description]
+	 * This function returns the object of class SIMPLE_HTML_DOM corresponding to the url provided.
+	 * input: @url
+	 * output: object
+	 * @param  [type] $url [description]
+	 * @return [type]      [description]
+	 */
+	public function get_dom_object($url)
+	{
+		return $this->set_dom_object($url);
+
+		//return $this->object_crawler;
 	}
 
 
-
-
-	function get_all_tags($url , $param = array())
+	public function get_all_tag_arr($obj , $param = array())
 	{
-		/*
-		$this->load->library('crawler');
-		$this->crawler->set_url($url);
-		*/
-		//$obj os object of class crawler
-		$obj = $this->get_dom_object($url);
+
+		//$obj = $this->get_dom_object($url);
 		if(!is_array($param))
 		{
 			return false;
 		}
-		else
-		{
-			//echo 'in else';
-
-		}
-		
+				
 
 		$return_array = array();
 		//var_dump($param);
 		foreach ($param as $key => $value)
 		{
-			//echo '<br>in foreach'.$value;
-			# code...
-		//	var_dump($param);
-			//$return_array[$value] = $this->crawler->get_tag( $value );
+		
 			$return_array[$value] = $obj->get_tag( $value );
 		}
 
-		var_dump($obj->get_all_attribute());
-
+		//var_dump($obj->get_all_attribute());
 		return $return_array;
 
 
 	}
 
-	function get_all_outer_tags($url , $param = array())
+	public function get_all_outer_tag_arr($obj , $param = array())
 	{
-		/*
-		$this->load->library('crawler');
-		$this->crawler->set_url($url);
-		*/
-		//$obj os object of class crawler
+		
 		$obj = $this->get_dom_object($url);
 		if(!is_array($param))
 		{
 			return false;
 		}
-		else
-		{
-			//echo 'in else';
-
-		}
 		
-
 		$return_array = array();
-		//var_dump($param);
+		
 		foreach ($param as $key => $value)
 		{
-			//echo '<br>in foreach'.$value;
-			# code...
-		//	var_dump($param);
-			//$return_array[$value] = $this->crawler->get_tag( $value );
 			$return_array[$value] = $obj->get_outer_tag( $value );
 		}
 		
-		var_dump($obj->get_all_attribute());
-
 		return $return_array;
 
+	}
+
+	public function get_outer_tag_value($obj , $value )
+	{
+		if(!is_object($obj))
+		{
+			return false;
+		}
+	
+		return  $obj->get_outer_tag( $value );
+	
+	}
+
+	public function get_tag_value($obj , $value)
+	{
+		//echo "<br>tag is ".$value;
+		//var_dump($value);
+		if(!is_object($obj))
+		{
+			return false;
+		}
+	
+		return  $obj->get_tag( $value );
 
 	}
 
@@ -111,7 +120,7 @@ class Utility extends CI_Model
 	*		 input(array('itemprop','content'),'<meta itemprop="price" content="345">'');
 	* 		output array(2) { ["itemprop"]=> string(5) "price" ["content"]=> string(3) "345" }
 	*/
-	function get_outer_text_attribute_value($attr = array(),$tag)
+	public function get_outer_text_attribute_value_arr($attr = array(),$tag)
 	{
 		$response = array();
 
@@ -135,6 +144,25 @@ class Utility extends CI_Model
 		return $response;
 		
 	}
+
+	public function get_outer_text_attribute_value($attr , $tag)
+	{
+		$len=  strpos($tag,$attr);
+
+		$arr = explode($attr,$tag);
+		//var_dump($arr);
+
+
+		$ss = substr($arr[1],2);
+
+		$substr = substr($arr[1],2,strpos($ss, '"'));
+
+		return $substr;
+
+	
+		
+	}
+
 
 }
 
