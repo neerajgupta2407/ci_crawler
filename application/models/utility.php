@@ -147,15 +147,22 @@ class Utility extends CI_Model
 
 	public function get_outer_text_attribute_value($attr , $tag)
 	{
+		/*
+		echo $attr;
+		print_r($tag);
+		echo '<br>';
+		*/
 		$len=  strpos($tag,$attr);
 
 		$arr = explode($attr,$tag);
 		//var_dump($arr);
+		$arr[1] = str_replace('"','',$arr[1]);
+		$arr[1] = str_replace(',','',$arr[1]);
+		$arr[1] = str_replace('/','',$arr[1]);
+		//var_dump($arr);
+		$ss = substr($arr[1],1);
 
-
-		$ss = substr($arr[1],2);
-
-		$substr = substr($arr[1],2,strpos($ss, '"'));
+		$substr = substr($arr[1],1,strpos($ss, '>'));
 
 		return $substr;
 
@@ -163,6 +170,34 @@ class Utility extends CI_Model
 		
 	}
 
+	public function filter_price_to_int($text)
+	{
+		//$text = strip_tags($text);
+		$pattern = '/&([#0-9A-Za-z]+);/';
+		$text =  preg_replace($pattern, '', $text);
+			//preg_replace('/((&#[0-9]+;)+)/', '',$text);
+		$text =  preg_replace('([^0-9\.]+)', '',$text);
+
+		if(!strpos($text, '.'))
+		{
+			return $text;
+
+			
+		}
+		else
+		{
+			
+			return substr($text,0,strpos($text, '.'));
+
+		}
+		
+
+	}
+
+	 public function strip_tag($tag)
+	 {
+	 	return strip_tags($tag);
+	 }
 
 }
 

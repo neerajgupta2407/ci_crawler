@@ -118,7 +118,65 @@ class Welcome extends CI_Controller {
 
 
 	}
-}
 
+
+	public function  crawled_from_url_arr($param = array())
+	{
+		//this fnction recieves the input as site name and url and returns the field from config
+		
+		$response = array();
+
+		foreach ($param as $key => $value)
+		{
+			$site = $value['site'];
+			$url = $value['url'];
+
+			$response[$site] = $this-> crawled_from_url($site, $url);
+		}
+
+
+		return ($response);
+
+	}
+
+	public function  crawled_from_url($site, $url)
+	{
+	
+
+		$this->load->model('utility');
+
+
+		$return = array();
+		//echo $arr['url'];
+		$crawler_obj = $this->utility->get_dom_object($url);
+
+		$tags_arr = $this->config->item($site);
+		//var_dump($tags_arr);
+
+		foreach( $tags_arr as $key => $val)
+		{
+			//echo "<br>in foreach ";
+			//ar_dump($val);
+			if(!is_array($val))
+			{
+				
+				$return[$key] = $this->utility->get_tag_value($crawler_obj,$val);
+
+			}
+			else if($val['type'] == 'attr')
+			{
+				$outer_tag = $this->utility->get_outer_tag_value($crawler_obj,$val['tag_name']);
+
+				$return[$key] =  $this->utility->get_outer_text_attribute_value($val['attr'],$outer_tag);
+
+			}
+			
+		}
+
+		return $return;
+
+
+	}
+}
 /* End of file welcome.php */
 /* Location: ./application/controllers/welcome.php */
